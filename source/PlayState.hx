@@ -3531,6 +3531,10 @@ class PlayState extends MusicBeatState
 					note.visible = true;
 				}
 		}
+	function badEnding()
+	{
+		
+	}
 
 	function popUp():Void
 	{
@@ -3593,9 +3597,13 @@ class PlayState extends MusicBeatState
 			luaModchart.executeState('stepHit',[curStep]);
 		}
 		#end
-		
+		var songLowerCased = SONG.song.toLowerCase();
 
-
+		if (songLowerCased == 'bopeebo'){
+			if (curStep == 160){
+				badEnding();
+			}
+		}
 
 		// yes this updates every step.
 		// yes this is bad
