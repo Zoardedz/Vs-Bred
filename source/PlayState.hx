@@ -138,6 +138,7 @@ class PlayState extends MusicBeatState
 	private var ss:Bool = false;
 
 
+
 	private var healthBarBG:FlxSprite;
 	private var healthBar:FlxBar;
 	private var songPositionBar:Float = 0;
@@ -306,6 +307,7 @@ class PlayState extends MusicBeatState
 		FlxG.cameras.add(camHUD);
 
 		FlxCamera.defaultCameras = [camGame];
+		
 
 		persistentUpdate = true;
 		persistentDraw = true;
@@ -2525,6 +2527,8 @@ class PlayState extends MusicBeatState
 			FlxG.save.data.downscroll = false;
 		}
 
+
+
 		if (FlxG.save.data.fpsCap > 290)
 			(cast (Lib.current.getChildAt(0), Main)).setFPSCap(290);
 
@@ -2609,6 +2613,7 @@ class PlayState extends MusicBeatState
 						difficulty = '-hard';
 
 					trace('LOADING NEXT SONG');
+
 					// pre lowercasing the next story song name
 					var nextSongLowercase = StringTools.replace(PlayState.storyPlaylist[0], " ", "-").toLowerCase();
 						switch (nextSongLowercase) {
@@ -2633,6 +2638,32 @@ class PlayState extends MusicBeatState
 
 						FlxG.sound.play(Paths.sound('Lights_Shut_off'));
 					}
+
+					if (songLowercase == 'dead')
+					{
+						healthBarBG.visible = false;
+						kadeEngineWatermark.visible = false;
+						healthBar.visible = false;
+						iconP1.visible = false;
+						iconP2.visible = false;
+						scoreTxt.visible = false;
+						dad.visible = false;
+
+						var blakscreen:FlxSprite = new FlxSprite(-FlxG.width * FlxG.camera.zoom, -FlxG.height * FlxG.camera.zoom).makeGraphic(FlxG.width * 3, FlxG.height * 3, FlxColor.BLACK);
+						blakscreen.scrollFactor.set();
+						add(blakscreen);
+
+						for (i in 0...4)
+						{
+						playerStrums.members[i].x = -278;
+						}
+
+						for (note in cpuStrums)
+						{
+							note.visible = false;
+						}
+					}
+
 
 					FlxTransitionableState.skipNextTransIn = true;
 					FlxTransitionableState.skipNextTransOut = true;
@@ -3563,44 +3594,8 @@ class PlayState extends MusicBeatState
 		}
 		#end
 		
-		if (SONG.song.toLowerCase() == "milf")
-		{
-			if (curStep == 63)
-			{
-			shakeCam = true;
-			}
-			if (curStep == 65)
-			{
-				shakeCam = false;
-				shakescreen();
-			}
-		}
-		
-		if(SONG.song.toLowerCase() == 'bopeebo')
-			{
-				if (curStep >= 128 && curStep <= 352)
-				{
-					popUp();
-					shakescreen();
-				}
 
-				if (curStep == 10)
-				{
-					invisibleNotes();
-					shakescreen();
-				}
-				if (curStep == 30)
-				{
-					visibleNotes();
-					shakescreen();
-				}
 
-				if (curStep == 130)
-				{
-					shakescreen();
-				}
-
-			}
 
 		// yes this updates every step.
 		// yes this is bad
